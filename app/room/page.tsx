@@ -15,8 +15,10 @@ import { useEffect, useState } from "react";
 
 export default function Page() {
   // TODO: get user input for room and name
-  const room = "quickstart-room";
-  const name = "quickstart-user";
+
+  const [room, setRoom] = useState<string>();
+  const [name, setName] = useState<string>();
+
   const [token, setToken] = useState("");
 
   useEffect(() => {
@@ -34,7 +36,23 @@ export default function Page() {
   }, []);
 
   if (token === "") {
-    return <div>Getting token...</div>;
+    return (
+      <form>
+        <input
+          type="text"
+          placeholder="Room"
+          value={room}
+          onChange={(e) => setRoom(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <button type="submit">Join The Room</button>
+      </form>
+    );
   }
 
   return (
@@ -43,6 +61,7 @@ export default function Page() {
       audio={true}
       token={token}
       serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_URL}
+      onDisconnected={() => setToken("")}
       // Use the default LiveKit theme for nice styles.
       data-lk-theme="default"
       style={{ height: "100dvh" }}
