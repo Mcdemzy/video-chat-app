@@ -21,33 +21,42 @@ export default function Page() {
 
   const [token, setToken] = useState("");
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const resp = await fetch(
-          `/api/get-participant-token?room=${room}&username=${name}`
-        );
-        const data = await resp.json();
-        setToken(data.token);
-      } catch (e) {
-        console.error(e);
-      }
-    })();
-  }, []);
+  async function getToken() {
+    if (!room || !name) {
+      return;
+    }
+    try {
+      const resp = await fetch(
+        `/api/get-participant-token?room=${room}&username=${name}`
+      );
+      const data = await resp.json();
+      setToken(data.token);
+    } catch (e) {
+      console.error(e);
+    }
+  }
 
   if (token === "") {
     return (
-      <form>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          getToken();
+        }}
+        className="flex flex-col justify-center items-center min-h-screen"
+      >
         <input
           type="text"
           placeholder="Room"
           value={room}
+          className="mb-4"
           onChange={(e) => setRoom(e.target.value)}
         />
         <input
           type="text"
           placeholder="Name"
           value={name}
+          className="mb-4"
           onChange={(e) => setName(e.target.value)}
         />
         <button type="submit">Join The Room</button>
