@@ -12,9 +12,21 @@ import {
 } from "@livekit/components-react";
 import { Track } from "livekit-client";
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 export default function Page() {
-  // TODO: get user input for room and name
+  const params = useSearchParams();
+
+  useEffect(() => {
+    const room = params.get("room");
+    const name = params.get("name");
+
+    if (room && name) {
+      setRoom(room);
+      setName(name);
+      getToken();
+    }
+  }, [params]);
 
   const [room, setRoom] = useState<string>();
   const [name, setName] = useState<string>();
@@ -49,17 +61,22 @@ export default function Page() {
           type="text"
           placeholder="Room"
           value={room}
-          className="mb-4"
+          className="mb-4 ring-1 ring-gray-300 p-2"
           onChange={(e) => setRoom(e.target.value)}
         />
         <input
           type="text"
           placeholder="Name"
           value={name}
-          className="mb-4"
+          className="mb-4 ring-1 ring-gray-300 p-2"
           onChange={(e) => setName(e.target.value)}
         />
-        <button type="submit">Join The Room</button>
+        <button
+          type="submit"
+          className="bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors p-4"
+        >
+          Join The Room
+        </button>
       </form>
     );
   }
