@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Global Styles */
+body {
+  font-family: "Roboto", sans-serif;
+}
+
+/* Component Styles */
+.max-w-prose {
+  max-width: 65ch;
+}
+
+/* For larger screens */
+@media (min-width: 768px) {
+  .max-w-prose {
+    max-width: 75ch;
+  }
+}

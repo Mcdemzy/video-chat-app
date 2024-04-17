@@ -26,7 +26,7 @@ export default function Page() {
       setName(name);
       getToken();
     }
-  }, [params]);
+  });
 
   const [room, setRoom] = useState<string>();
   const [name, setName] = useState<string>();
@@ -50,34 +50,37 @@ export default function Page() {
 
   if (token === "") {
     return (
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          getToken();
-        }}
-        className="flex flex-col justify-center items-center min-h-screen"
-      >
-        <input
-          type="text"
-          placeholder="Room"
-          value={room}
-          className="mb-4 ring-1 ring-gray-300 p-2"
-          onChange={(e) => setRoom(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Name"
-          value={name}
-          className="mb-4 ring-1 ring-gray-300 p-2"
-          onChange={(e) => setName(e.target.value)}
-        />
-        <button
-          type="submit"
-          className="bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors p-4"
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-blue-500 to-blue-700">
+        {" "}
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            getToken();
+          }}
+          className="flex flex-col justify-center items-center min-h-screen"
         >
-          Join The Room
-        </button>
-      </form>
+          <input
+            type="text"
+            placeholder="Room"
+            value={room}
+            className="mb-4 ring-1 ring-gray-300 px-2 py-3 rounded-sm"
+            onChange={(e) => setRoom(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Username"
+            value={name}
+            className="mb-4 ring-1 ring-gray-300 px-2 py-3 rounded-sm"
+            onChange={(e) => setName(e.target.value)}
+          />
+          <button
+            type="submit"
+            className="bg-blue-500 text-white rounded-md  px-8 hover:bg-blue-400 transition-colors p-4"
+          >
+            Join The Room
+          </button>
+        </form>
+      </div>
     );
   }
 
